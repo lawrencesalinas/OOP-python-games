@@ -2,7 +2,7 @@ import random
 
 suits = ('Hearts', 'Diamonds', 'Spades', 'Clubs')
 ranks = ('Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace')
-values = {'Two':2, 'Three':3, 'Four':4, 'Five':5, 'Six':6, 'Seven':7, 'Eight':8, 
+value = {'Two':2, 'Three':3, 'Four':4, 'Five':5, 'Six':6, 'Seven':7, 'Eight':8, 
             'Nine':9, 'Ten':10, 'Jack':11, 'Queen':12, 'King':13, 'Ace':14}
 
 # Card class
@@ -10,7 +10,7 @@ class Card:
     def __init__(self, suit, rank):
         self.rank = rank
         self.suit = suit
-        self.value = values[rank]
+        self.value = value[rank]
         
     def __str__(self):
         return f"{self.rank} of {self.suit}"
@@ -121,6 +121,43 @@ while game_on:
     player_two_cards = []
     player_one_cards.append(player_two.remove_one())
     
+    print(player_one_cards[-1].value)
+    # while at war
+    at_war = True
+    
+    while at_war:
+        # choosing the bottom of the card to be comapred so an endless does  not occur
+        if player_one_cards[-1].value > player_two_cards[-1].value:
+            player_one.add_cards(player_one_cards)
+            player_one.add_cards(player_two_cards)
+            at_war = False 
+        elif player_two_cards[-1].value > player_one_cards[-1].value:
+            player_two.add_cards(player_two_cards)
+            player_two.add_cards(player_one_cards)
+            at_war =False
+        else:
+            print("WAR!")
+            if len(player_one.all_cards) < 5:
+                print("Player One unable to declare war")
+                print("Player Two wins")
+                game_on = False
+                break
+            elif len(player_two.all_cards) < 5:
+                print("Player Two unable to declare war")
+                print("Player One wins")
+                
+                game_on = False
+                break
+            else:
+                # add more cards
+                for num in range(5):
+                    player_one_cards.append(player_one.remove_one())
+                    player_two_cards.append(player_two.remove_one())
+                    
+            
+            
+    
+    
     
     
     
@@ -130,11 +167,3 @@ while game_on:
 
         
     
-        
-        
-    
-# SUIT, RANK, VALUE
-
- # DECK 
- 
- # PLAYER
