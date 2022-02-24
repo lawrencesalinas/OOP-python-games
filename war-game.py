@@ -37,8 +37,6 @@ class Deck:
         # Note we remove one card from the list of all_cards
         return self.all_cards.pop()
 
-new_deck = Deck()
-print(new_deck.shuffle)
 # print(new_deck.all_cards)
                 
 # Player Class
@@ -111,7 +109,9 @@ while game_on:
         game_on = False
         break
     
-    # Start a new round
+    # Otherwise, the game is still on!
+    
+    # Start a new round and reset current cards "on the table"
     
     # current cards in play  
     player_one_cards = []
@@ -119,17 +119,20 @@ while game_on:
     player_one_cards.append(player_one.remove_one())
     
     player_two_cards = []
-    player_one_cards.append(player_two.remove_one())
+    player_two_cards.append(player_two.remove_one())
     
-    print(player_one_cards[-1].value)
+
+    
     # while at war
     at_war = True
     
     while at_war:
         # choosing the bottom of the card to be comapred so an endless does  not occur
         if player_one_cards[-1].value > player_two_cards[-1].value:
+            # Player One gets the cards
             player_one.add_cards(player_one_cards)
             player_one.add_cards(player_two_cards)
+             # No Longer at "war" , time for next round
             at_war = False 
         elif player_two_cards[-1].value > player_one_cards[-1].value:
             player_two.add_cards(player_two_cards)
@@ -137,6 +140,12 @@ while game_on:
             at_war =False
         else:
             print("WAR!")
+            # This occurs when the cards are equal.
+            # We'll grab another card each and continue the current war.
+            
+            # First check to see if player has enough cards
+            
+            # Check to see if a player is out of cards:
             if len(player_one.all_cards) < 5:
                 print("Player One unable to declare war")
                 print("Player Two wins")
